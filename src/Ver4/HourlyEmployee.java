@@ -1,0 +1,73 @@
+
+package Ver4;
+
+public class HourlyEmployee extends Employee {
+
+    private float totalHoursWorked;
+    private double ratePerHour;
+
+    public HourlyEmployee() {
+        super();
+        totalHoursWorked = 0;
+        ratePerHour = 0;
+    }
+
+    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, float totalHoursWorked, double ratePerHour) {
+
+        super(empID, empName, birthDate, dateHired);
+
+        setTotalHoursWorked(totalHoursWorked);
+        setRatePerHour(ratePerHour);
+    }
+
+    public float getTotalHoursWorked() {
+        return totalHoursWorked;
+    }
+
+    public void setTotalHoursWorked(float totalHoursWorked) {
+        if (totalHoursWorked < 0) {
+            throw new IllegalArgumentException("Hours cannot be negative.");
+        }
+        this.totalHoursWorked = totalHoursWorked;
+    }
+
+    public double getRatePerHour() {
+        return ratePerHour;
+    }
+
+    public void setRatePerHour(double ratePerHour) {
+        if (ratePerHour < 0) {
+            throw new IllegalArgumentException("Rate cannot be negative.");
+        }
+        this.ratePerHour = ratePerHour;
+    }
+
+    public double computeSalary(int currentMonth) {
+
+        double salary;
+
+        if (totalHoursWorked <= 40) {
+            salary = totalHoursWorked * ratePerHour;
+        } else {
+            salary = (40 * ratePerHour)
+                    + ((totalHoursWorked - 40) * ratePerHour * 1.5);
+        }
+
+        if (getBirthDate().getMonth() == currentMonth) {
+            salary += 5000;
+        }
+
+        return salary;
+    }
+
+    public void displayHourlyEmployee() {
+        displayEmployee();
+
+        System.out.printf("Hours: %.2f | Rate: ₱%.2f/hr%n", totalHoursWorked, ratePerHour);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("HourlyEmployee [%s, Hours: %.2f, Rate: ₱%.2f]", super.toString(), totalHoursWorked, ratePerHour);
+    }
+}
